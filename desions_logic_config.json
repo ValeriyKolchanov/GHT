@@ -1,0 +1,5 @@
+{
+  "wall-water": {"ON": "wall-water_ON [wall-light AND rack-light]", "OFF": "wall-water_OFF"},
+  "wall-light": {"ON": "wall-light_ON", "OFF": "wall-light_OFF"},
+  "rack-light": {"ON": "rack-light_ON", "OFF": "rack-light_OFF"}
+}

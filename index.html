@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<head>
+  <link type="text/css" href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <title>GHT Control Panel</title>
+</head>
+<header>
+
+</header>
+<body>
+
+  <div class="menu">
+    <div class="tab">
+      <button class="tablinks" onclick="Menu(event, 'Control Panel')" id="defaultOpen">Control Panel</button>
+      <button class="tablinks" onclick="Menu(event, 'Settings')">Settings</button>
+      <button class="tablinks" onclick="Menu(event, 'Power')">Power</button>
+      <button class="tablinks" onclick="Menu(event, 'Network')">Network</button>
+      <button class="tablinks" onclick="Menu(event, 'Device')">Device</button>
+    </div>
+    
+    <div id="Control Panel" class="tabcontent">
+      <h3 class="head-text">Control Panel</h3>
+
+      <div class="sw">
+          <button class="btn" id="my-button" value="{'slave_name': 'rack-light', 'value': '256'}">ON</button>
+          <button class="btnred" id="my-button" value="{'slave_name': 'rack-light', 'value': '512'}">OFF</button>
+        <p class="text-check"> Освещение стеллажа </p>
+      </div>
+
+      <div class="sw">
+          <button class="btn" id="my-button" value="{'slave_name': 'wall-light', 'value': '256'}">ON</button>
+          <button class="btnred" id="my-button" value="{'slave_name': 'wall-light', 'value': '512'}">OFF</button>
+        <p class="text-check"> Освещение стенки </p>
+      </div>
+
+      <div class="sw">
+        <button class="btn" id="my-button" value="{'slave_name': 'wall-water', 'value': '256'}">ON</button>
+        <button class="btnred" id="my-button" value="{'slave_name': 'wall-water', 'value': '512'}">OFF</button>
+      <p class="text-check"> Полив стенки</p>
+      </div>
+
+<!--      <div class="sw">-->
+<!--          <button class="btn" id="my-button" value="rack-water-on">ON</button>-->
+<!--          <button class="btnred" id="my-button" value="rack-water-off">OFF</button>-->
+<!--        <p class="text-check"> Полив стеллажа</p>-->
+<!--      </div>-->
+      
+    </div>
+    
+    <div id="Settings" class="tabcontent">
+      <h3 class="head-text">Settings</h3>
+      <p></p> 
+    </div>
+    
+    <div id="Power" class="tabcontent">
+      <h3 class="head-text">Power</h3>
+      <div class="sw">
+          <button class="btn" id="my-button" value="reboot">REB</button>
+        <p class="text-check"> Перезагрузить устройство</p>
+      </div>
+    </div>
+
+    <div id="Network" class="tabcontent">
+      <h3 class="head-text">Network</h3>
+
+    </div>
+
+    <div id="Device" class="tabcontent">
+      <h3 class="head-text">Device</h3>
+      <p></p>
+    </div>
+    <script>
+      function Menu(evt, cityName) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+              tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablinks");
+          for (i = 0; i < tablinks.length; i++) {
+              tablinks[i].className = tablinks[i].className.replace(" active", "");
+          }
+          document.getElementById(cityName).style.display = "block";
+          evt.currentTarget.className += " active";
+      }
+      document.getElementById("defaultOpen").click();
+      </script>
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+            $('button#my-button').click(function () {
+                var button_value = $(this).val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/process",
+                    contentType: "application/json;charset=UTF-8",
+                    data: JSON.stringify({'button_value': button_value}),
+                    success: function(response) {
+                        $('#result').html(response['result']);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+      </script>
+
+  </div>
+
+</body>
+<footer>
+
+</footer>
+</html>

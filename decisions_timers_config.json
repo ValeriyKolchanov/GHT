@@ -1,0 +1,17 @@
+{
+  "rack_light": {
+    "type": "timer",
+    "on": [8, 0],
+    "off": [20, 0]
+  },
+  "wall-light": {
+    "type": "timer",
+    "on": [8, 0],
+    "off": [20, 0]
+  },
+  "wall-water": {
+    "type": "period",
+    "delta": 14400,
+    "duration": 720
+  }
+}
